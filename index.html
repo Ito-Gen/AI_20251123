@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Travel Guide | Heritage & Harmony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b91c1c;
+            --accent: #f97316;
+            --dark: #141010;
+            --muted: #6b6b6b;
+            --bg: #f7f3f0;
+            --card: #ffffff;
+            --pill: rgba(185, 28, 28, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .top-nav .brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            padding: 40px 0 80px;
+            background: linear-gradient(120deg, rgba(20,16,16,0.9), rgba(20,16,16,0.55)), url('https://images.unsplash.com/photo-1480796927426-f609979314bd?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+            color: white;
+        }
+
+        .hero-content {
+            margin-top: 80px;
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            margin: 20px 0 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            max-width: 640px;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.92);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 30px 0 40px;
+        }
+
+        .cta {
+            padding: 14px 26px;
+            border-radius: 999px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: inherit;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .cta.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .cta:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .hero-meta strong {
+            display: block;
+            font-size: 2rem;
+        }
+
+        section {
+            padding: clamp(40px, 8vw, 80px) 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .story-card {
+            background: var(--card);
+            padding: 26px;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(20,16,16,0.06);
+        }
+
+        .story-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        .stat-card strong {
+            font-size: 2.6rem;
+            color: var(--primary);
+        }
+
+        .filters-panel {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            box-shadow: 0 15px 40px rgba(20,16,16,0.08);
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            background: var(--pill);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .pill.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 16px 12px 38px;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.08);
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .filter-note {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(20,16,16,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-image {
+            position: relative;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .area-badge {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.55);
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .card-body {
+            padding: 26px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .jp-label {
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .card-highlight {
+            background: rgba(185, 28, 28, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 0.95rem;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .season-tag {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .map-btn:hover {
+            background: var(--primary);
+        }
+
+        .season-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .season-card {
+            background: rgba(255,255,255,0.7);
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .season-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(255,255,255,0.6);
+            border-radius: 22px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--muted);
+        }
+
+        @media (max-width: 720px) {
+            .hero-content {
+                margin-top: 40px;
+            }
+
+            .hero-meta {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .card-footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero" id="top">
+        <div class="container">
+            <nav class="top-nav">
+                <span class="brand">Japan Travel Guide</span>
+                <div class="nav-links">
+                    <a href="#story">Heritage</a>
+                    <a href="#destinations">Destinations</a>
+                    <a href="#seasons">Seasons</a>
+                </div>
+            </nav>
+            <div class="hero-content">
+                <span class="hero-kicker">HERITAGE & HARMONY</span>
+                <h1>時代を紡ぐ島国の息遣いを、あなたの旅路へ。</h1>
+                <p>日本は外来文化をしなやかに受け入れ、自らの美意識で磨き上げてきました。神話の黎明から現代テクノロジーまで、47都道府県の土地それぞれが誇り高き物語をたたえています。</p>
+                <div class="hero-actions">
+                    <a class="cta primary" href="#destinations">旅先を見つける</a>
+                    <a class="cta" href="#story">想いを読む</a>
+                </div>
+                <div class="hero-meta">
+                    <div>
+                        <strong id="hero-count">0</strong>
+                        <span>精選スポット</span>
+                    </div>
+                    <div>
+                        <strong>47</strong>
+                        <span>都道府県の個性</span>
+                    </div>
+                    <div>
+                        <strong>4</strong>
+                        <span>季節の表情</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="story">
+            <div class="container">
+                <p class="section-title">誇りが息づく、日本の物語</p>
+                <p class="section-subtitle">島国ならではの距離感が、古来からの精神性と世界最先端の創造性を共鳴させています。</p>
+                <div class="story-grid">
+                    <article class="story-card">
+                        <h3>古の記憶</h3>
+                        <p>社寺仏閣や街道の石畳からは、千年以上連綿と続く祈りの文化が感じられます。静寂の中で聞こえる風鈴の音が、旅人の心を整えてくれます。</p>
+                    </article>
+                    <article class="story-card">
+                        <h3>現代の躍動</h3>
+                        <p>ネオンやデジタルアートを纏う都市は、伝統を尊びながら未来を描きます。アニメ、ゲーム、テックの最前線も路地裏の工房も同じ熱量で輝きます。</p>
+                    </article>
+                    <article class="story-card">
+                        <h3>自然の呼吸</h3>
+                        <p>火山が育てた温泉、雪解けが描く棚田、波が磨いた海岸線。四季折々の光景が旅人に心身の休息と新たな気づきを与えてくれます。</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="insights">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <strong>25</strong>
+                        <p>UNESCO 世界遺産（文化/自然）</p>
+                    </div>
+                    <div class="stat-card">
+                        <strong>3000+</strong>
+                        <p>登録有形文化財</p>
+                    </div>
+                    <div class="stat-card">
+                        <strong>1300年</strong>
+                        <p>西暦710年から続く都の記憶</p>
+                    </div>
+                    <div class="stat-card">
+                        <strong>∞</strong>
+                        <p>旅人を魅了する出会い</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="filters">
+            <div class="container">
+                <p class="section-title">行き先をカスタマイズ</p>
+                <p class="section-subtitle">季節やエリア、体験で絞り込み、あなただけの旅路を描きましょう。</p>
+                <div class="filters-panel">
+                    <div class="filter-group">
+                        <label>エリアで探す</label>
+                        <div class="pill-group" id="area-filters"></div>
+                    </div>
+                    <div class="filter-group">
+                        <label>季節の魅力</label>
+                        <div class="pill-group" id="season-filters"></div>
+                    </div>
+                    <div class="filter-group">
+                        <label>キーワード</label>
+                        <div class="search-wrapper">
+                            <span class="search-icon">⌕</span>
+                            <input id="search-input" type="search" placeholder="例: 神社, 夜景, 温泉">
+                        </div>
+                    </div>
+                </div>
+                <p class="filter-note">表示中: <strong id="results-count">0</strong> 件</p>
+            </div>
+        </section>
+
+        <section id="destinations">
+            <div class="container">
+                <p class="section-title">全国の珠玉スポット</p>
+                <div id="spot-grid" class="grid-container"></div>
+            </div>
+        </section>
+
+        <section id="seasons">
+            <div class="container">
+                <p class="section-title">四季が織りなす旅のテーマ</p>
+                <div class="season-grid">
+                    <article class="season-card">
+                        <h3>春 | Hanami</h3>
+                        <p>桜の香りとともに、社殿の朱とピンクのグラデーションが広がります。朝霧に包まれた庭園での茶会もおすすめ。</p>
+                    </article>
+                    <article class="season-card">
+                        <h3>夏 | Matsuri</h3>
+                        <p>太鼓のリズムに乗って踊る夜。提灯の明かりと屋台の匂いが、心を高鳴らせます。離島での星空観測も忘れずに。</p>
+                    </article>
+                    <article class="season-card">
+                        <h3>秋 | Koyo</h3>
+                        <p>錦秋が山々を染め、渓谷を黄金色に輝かせます。禅寺の庭で紅葉が舞う様は、誰もを静寂へと誘います。</p>
+                    </article>
+                    <article class="season-card">
+                        <h3>冬 | Snow & Onsen</h3>
+                        <p>雪国の合掌造り集落やライトアップされた運河は幻想的。湯けむりに包まれて、旅の疲れを癒しましょう。</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Japan Travel Guide Project — 日本の誇りを世界へ。</p>
+    </footer>
+
+    <script>
+        const spots = [
+            {
+                id: 1,
+                nameEn: "Kinkaku-ji (Golden Pavilion)",
+                nameJp: "金閣寺",
+                area: "Kyoto",
+                prefecture: "Kyoto",
+                seasons: ["Autumn", "Winter"],
+                tagline: "鏡のような池に映る黄金の寺院",
+                description: "室町文化を象徴する舎利殿。純金箔に覆われた上層が湖面に揺れ、四季ごとに異なる表情を映します。",
+                highlight: "開門直後の静寂な時間は、風が止まるほど幻想的。",
+                access: "京都駅から市バス205系統で約40分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Kinkaku-ji",
+                image: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1200&q=80",
+                tags: ["temple", "zen", "heritage"]
+            },
+            {
+                id: 2,
+                nameEn: "Fushimi Inari Taisha",
+                nameJp: "伏見稲荷大社",
+                area: "Kyoto",
+                prefecture: "Kyoto",
+                seasons: ["Spring", "Autumn"],
+                tagline: "千本鳥居が描く朱のトンネル",
+                description: "稲荷信仰の総本宮。稲荷山を巡る参道には約1万基もの鳥居が連なり、異界への扉を思わせます。",
+                highlight: "夕刻に差し込む斜光が鳥居を照らし、神秘的な陰影を作ります。",
+                access: "JR奈良線「稲荷」駅下車すぐ",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha",
+                image: "https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?auto=format&fit=crop&w=1200&q=80",
+                tags: ["shrine", "hike", "torii"]
+            },
+            {
+                id: 3,
+                nameEn: "Arashiyama Bamboo Grove",
+                nameJp: "嵐山 竹林の小径",
+                area: "Kyoto",
+                prefecture: "Kyoto",
+                seasons: ["Spring", "Autumn"],
+                tagline: "風で奏でる竹の交響曲",
+                description: "竹林を抜けるたびに光と影が揺らめき、遠くで大堰川がささやきます。早朝散策が特におすすめ。",
+                highlight: "人力車と合わせて巡れば、京の粋を肌で感じられます。",
+                access: "嵐山駅から徒歩5分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove",
+                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+                tags: ["nature", "bamboo", "scenic"]
+            },
+            {
+                id: 4,
+                nameEn: "Senso-ji Temple",
+                nameJp: "浅草寺",
+                area: "Tokyo",
+                prefecture: "Tokyo",
+                seasons: ["Spring", "Winter"],
+                tagline: "下町情緒が息づく江戸の玄関口",
+                description: "雷門の大提灯と仲見世通りの賑わいが、江戸の粋を今に伝えます。和菓子や工芸品の店も多彩。",
+                highlight: "日没後のライトアップは、朱塗りが一層艶やかに映ります。",
+                access: "銀座線・浅草線「浅草」駅から徒歩5分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Senso-ji+Temple",
+                image: "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1200&q=80",
+                tags: ["temple", "food", "shopping"]
+            },
+            {
+                id: 5,
+                nameEn: "Meiji Jingu",
+                nameJp: "明治神宮",
+                area: "Tokyo",
+                prefecture: "Tokyo",
+                seasons: ["Summer", "Autumn"],
+                tagline: "都会の中心に守られた杜",
+                description: "原宿駅から一歩入ると深い森に包まれ、樹齢百年を超える木々が参道を覆います。心身を整える聖域。",
+                highlight: "早朝の参拝では、澄んだ空気と鳥の声が迎えてくれます。",
+                access: "JR山手線「原宿」駅から徒歩1分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Meiji+Jingu",
+                image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+                tags: ["forest", "shrine", "city oasis"]
+            },
+            {
+                id: 6,
+                nameEn: "teamLab Planets TOKYO",
+                nameJp: "チームラボプラネッツ TOKYO",
+                area: "Tokyo",
+                prefecture: "Tokyo",
+                seasons: ["Summer", "Winter"],
+                tagline: "身体ごと没入するデジタルアート",
+                description: "裸足で水に足を浸しながら光の世界を進む体験型ミュージアム。日本の感性とテクノロジーが融合します。",
+                highlight: "季節や時間帯で作品が変化し、何度訪れても新鮮。",
+                access: "ゆりかもめ「新豊洲」駅徒歩1分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=teamLab+Planets+TOKYO",
+                image: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80",
+                tags: ["art", "digital", "immersive"]
+            },
+            {
+                id: 7,
+                nameEn: "Dotonbori",
+                nameJp: "道頓堀",
+                area: "Osaka",
+                prefecture: "Osaka",
+                seasons: ["Summer", "Winter"],
+                tagline: "笑いと食の都を照らすネオン",
+                description: "巨大看板とグルメがひしめく川沿い。粉もの文化やユニークな商店が旅人の心と胃袋を満たします。",
+                highlight: "リバークルーズで大阪らしい活気を全身で体感。",
+                access: "大阪メトロ「なんば」駅から徒歩5分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Dotonbori",
+                image: "https://images.unsplash.com/photo-1590559899731-a3828395a22c?auto=format&fit=crop&w=1200&q=80",
+                tags: ["food", "nightlife", "city"]
+            },
+            {
+                id: 8,
+                nameEn: "Osaka Castle Park",
+                nameJp: "大阪城公園",
+                area: "Osaka",
+                prefecture: "Osaka",
+                seasons: ["Spring", "Autumn"],
+                tagline: "石垣と桜が語る太閤の夢",
+                description: "壮大な天守閣と広大な公園が、四季折々の花で彩られます。歴史ファンにもフォトグラファーにも人気。",
+                highlight: "春は3000本の桜が咲き誇り、黄金の鯱瓦が青空に映えます。",
+                access: "JR大阪城公園駅から徒歩5分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Osaka+Castle",
+                image: "https://images.unsplash.com/photo-1571556745977-3c119fa5de3f?auto=format&fit=crop&w=1200&q=80",
+                tags: ["castle", "history", "park"]
+            },
+            {
+                id: 9,
+                nameEn: "Itsukushima Shrine",
+                nameJp: "厳島神社",
+                area: "Chugoku",
+                prefecture: "Hiroshima",
+                seasons: ["Autumn", "Spring"],
+                tagline: "海に浮かぶ朱の大鳥居",
+                description: "潮の満ち引きで姿を変える神殿建築。海と山に抱かれた神域で、世界遺産にも登録されています。",
+                highlight: "干潮時は鳥居の近くまで歩け、満潮時は船から参拝可能。",
+                access: "JR宮島口駅からフェリーで約10分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Itsukushima+Shrine",
+                image: "https://images.unsplash.com/photo-1480796927426-f609979314bd?auto=format&fit=crop&w=1200&q=80",
+                tags: ["island", "shrine", "world heritage"]
+            },
+            {
+                id: 10,
+                nameEn: "Mount Fuji Panorama",
+                nameJp: "富士山 展望",
+                area: "Chubu",
+                prefecture: "Yamanashi",
+                seasons: ["Summer", "Winter"],
+                tagline: "日本一の霊峰が描くシンメトリー",
+                description: "富士五湖エリアから望む富士山は、雲海と朝焼けが織りなすドラマ。登山やトレッキング、温泉も充実。",
+                highlight: "初夏のご来光登山は一生の思い出に。",
+                access: "新宿から高速バスで河口湖まで約2時間",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Mount+Fuji",
+                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+                tags: ["mountain", "sunrise", "iconic"]
+            },
+            {
+                id: 11,
+                nameEn: "Shirakawa-go",
+                nameJp: "白川郷",
+                area: "Chubu",
+                prefecture: "Gifu",
+                seasons: ["Winter"],
+                tagline: "合掌造りの灯りが雪国を照らす",
+                description: "豪雪地帯で育まれた合掌造り集落。茅葺きの家々からこぼれる灯火が、幻想的な冬景色を演出します。",
+                highlight: "冬季ライトアップは事前予約制で、特別な夜を体験できます。",
+                access: "高山駅からバスで約50分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Shirakawa-go",
+                image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=80",
+                tags: ["village", "snow", "world heritage"]
+            },
+            {
+                id: 12,
+                nameEn: "Otaru Canal",
+                nameJp: "小樽運河",
+                area: "Hokkaido",
+                prefecture: "Hokkaido",
+                seasons: ["Winter", "Spring"],
+                tagline: "北の港町に灯るガス灯の光",
+                description: "石造倉庫群と運河沿いの散策路がロマンを誘います。硝子工芸や海鮮グルメも堪能できます。",
+                highlight: "雪の降る夜、灯りが水面に反射して幻想的な景色に。",
+                access: "札幌からJRで約35分",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Otaru+Canal",
+                image: "https://images.unsplash.com/photo-1617957545427-21f922f0df65?auto=format&fit=crop&w=1200&q=80",
+                tags: ["canal", "winter", "romantic"]
+            }
+        ];
+
+        const filterState = {
+            area: 'all',
+            season: 'all',
+            query: ''
+        };
+
+        const spotGrid = document.getElementById('spot-grid');
+        const areaFilters = document.getElementById('area-filters');
+        const seasonFilters = document.getElementById('season-filters');
+        const searchInput = document.getElementById('search-input');
+        const resultsCount = document.getElementById('results-count');
+        const heroCount = document.getElementById('hero-count');
+
+        const seasonOrder = ["Spring", "Summer", "Autumn", "Winter"];
+        const seasonLabels = {
+            Spring: "春 - Sakura",
+            Summer: "夏 - Matsuri",
+            Autumn: "秋 - Koyo",
+            Winter: "冬 - Snow"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAreaFilters();
+            renderSeasonFilters();
+            attachSearch();
+            renderSpots();
+            updateHeroCount();
+        });
+
+        areaFilters.addEventListener('click', (event) => {
+            const button = event.target.closest('button');
+            if (!button) return;
+            filterState.area = button.dataset.area;
+            renderAreaFilters();
+            renderSpots();
+        });
+
+        seasonFilters.addEventListener('click', (event) => {
+            const button = event.target.closest('button');
+            if (!button) return;
+            filterState.season = button.dataset.season;
+            renderSeasonFilters();
+            renderSpots();
+        });
+
+        function renderAreaFilters() {
+            const uniqueAreas = Array.from(new Set(spots.map(spot => spot.area))).sort();
+            const areaList = ['all', ...uniqueAreas];
+            areaFilters.innerHTML = areaList.map(area => `
+                <button class="pill ${filterState.area === area ? 'active' : ''}" data-area="${area}">
+                    ${area === 'all' ? '全国' : area}
+                </button>
+            `).join('');
+        }
+
+        function renderSeasonFilters() {
+            const usedSeasons = seasonOrder.filter(season =>
+                spots.some(spot => spot.seasons.includes(season))
+            );
+            const seasonList = ['all', ...usedSeasons];
+            seasonFilters.innerHTML = seasonList.map(season => `
+                <button class="pill ${filterState.season === season ? 'active' : ''}" data-season="${season}">
+                    ${season === 'all' ? 'すべて' : seasonLabels[season]}
+                </button>
+            `).join('');
+        }
+
+        function attachSearch() {
+            searchInput.addEventListener('input', (event) => {
+                filterState.query = event.target.value.trim().toLowerCase();
+                renderSpots();
+            });
+        }
+
+        function matchesFilters(spot) {
+            const matchArea = filterState.area === 'all' || spot.area === filterState.area;
+            const matchSeason = filterState.season === 'all' || spot.seasons.includes(filterState.season);
+            const text = `${spot.nameEn} ${spot.nameJp} ${spot.description} ${spot.tags.join(' ')}`.toLowerCase();
+            const matchQuery = !filterState.query || text.includes(filterState.query);
+            return matchArea && matchSeason && matchQuery;
+        }
+
+        function renderSpots() {
+            const filtered = spots.filter(matchesFilters);
+            resultsCount.textContent = filtered.length;
+
+            if (!filtered.length) {
+                spotGrid.innerHTML = `<div class="empty-state">条件に合うスポットが見つかりませんでした。フィルターを調整してください。</div>`;
+                return;
+            }
+
+            spotGrid.innerHTML = filtered.map(createCard).join('');
+        }
+
+        function createCard(spot) {
+            return `
+                <article class="card">
+                    <div class="card-image" style="background-image: url('${spot.image}');">
+                        <span class="area-badge">${spot.area} / ${spot.prefecture}</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="jp-label">${spot.tagline}</p>
+                        <h2>${spot.nameEn}</h2>
+                        <p class="jp-label">${spot.nameJp}</p>
+                        <p>${spot.description}</p>
+                        <div class="card-highlight">
+                            <strong>✨ Highlight</strong>
+                            <p>${spot.highlight}</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="season-tag">${spot.seasons.join(' · ')}</span>
+                            <span>🚉 ${spot.access}</span>
+                        </div>
+                        <div class="card-footer">
+                            <a class="map-btn" href="${spot.mapLink}" target="_blank" rel="noopener">Google Maps</a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function updateHeroCount() {
+            heroCount.textContent = spots.length;
+        }
+    </script>
+</body>
+</html>
