@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAPAN TRAVEL GUIDE - Prototype</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 基本設定 */
+        :root {
+            --primary-color: #b91c1c; /* 日本らしい赤 */
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f4f4f4;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ヘッダー */
+        header {
+            background-color: var(--card-bg);
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        /* フィルターボタン */
+        .filter-nav {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-nav button {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-nav button:hover, .filter-nav button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* グリッドレイアウト */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        /* 観光地カード */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .area-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title-en {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .card-title-jp {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background-color: #fff5f5;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        .access-info {
+            font-size: 0.9rem;
+            margin-top: auto; /* 下寄せ */
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .map-btn {
+            display: block;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .map-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>JAPAN TRAVEL GUIDE</h1>
+            <p>Discover the hidden gems and famous spots across Japan.</p>
+        </div>
+    </header>
+
+    <nav class="filter-nav">
+        <button id="filter-all" onclick="filterSpots('all')" class="active">All</button>
+        <button id="filter-tokyo" onclick="filterSpots('Tokyo')">Tokyo Area</button>
+        <button id="filter-kyoto" onclick="filterSpots('Kyoto')">Kyoto Area</button>
+        <button id="filter-osaka" onclick="filterSpots('Osaka')">Osaka Area</button>
+    </nav>
+
+    <main class="container">
+        <div id="spot-grid" class="grid-container">
+            </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Japan Travel Guide Project</p>
+    </footer>
+
+    <script>
+        // 観光地データのリスト（ここを増やしていけばサイトが充実します）
+        const spots = [
+            {
+                id: 1,
+                nameEn: "Kinkaku-ji (Golden Pavilion)",
+                nameJp: "金閣寺",
+                area: "Kyoto",
+                image: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1000&auto=format&fit=crop", // 仮の画像URL
+                description: "A Zen temple whose top two floors are completely covered in gold leaf. It overlooks a large pond and is one of the most iconic sights in Japan.",
+                highlight: "The reflection of the golden temple in the pond is breathtaking.",
+                access: "Bus No. 205 from Kyoto Station (approx. 40 mins).",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Kinkaku-ji" // Google Mapへのリンクを修正
+            },
+            {
+                id: 2,
+                nameEn: "Senso-ji Temple",
+                nameJp: "浅草寺",
+                area: "Tokyo",
+                image: "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=1000&auto=format&fit=crop",
+                description: "Tokyo's oldest temple, famous for its giant red lantern at the Kaminarimon Gate. The street leading to the temple is filled with traditional shops.",
+                highlight: "Try the 'Ningyo-yaki' sweets on Nakamise Street.",
+                access: "5 mins walk from Asakusa Station (Ginza Line / Asakusa Line).",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Senso-ji+Temple"
+            },
+            {
+                id: 3,
+                nameEn: "Fushimi Inari Taisha",
+                nameJp: "伏見稲荷大社",
+                area: "Kyoto",
+                image: "https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?q=80&w=1000&auto=format&fit=crop",
+                description: "Famous for its thousands of vermilion torii gates, which straddle a network of trails behind its main buildings.",
+                highlight: "Hiking through the endless tunnel of Torii gates.",
+                access: "Just outside JR Inari Station (5 mins from Kyoto Station).",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha"
+            },
+            {
+                id: 4,
+                nameEn: "Dotonbori",
+                nameJp: "道頓堀",
+                area: "Osaka",
+                image: "https://images.unsplash.com/photo-1590559899731-a3828395a22c?q=80&w=1000&auto=format&fit=crop",
+                description: "The heart of Osaka's food culture. Neon lights, giant signboards, and endless food stalls make this place energetic at night.",
+                highlight: "Take a photo with the Glico Running Man sign.",
+                access: "5 mins walk from Namba Station.",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Dotonbori"
+            }
+        ];
+
+        // HTMLにデータを表示する関数
+        function renderSpots(filterArea) {
+            const container = document.getElementById('spot-grid');
+            container.innerHTML = ''; // 一旦中身をクリア
+
+            // フィルタリング処理
+            const filteredSpots = filterArea === 'all' 
+                ? spots 
+                : spots.filter(spot => spot.area === filterArea);
+
+            // カードを生成して追加
+            filteredSpots.forEach(spot => {
+                const cardHTML = `
+                    <article class="card">
+                        <div class="card-image" style="background-image: url('${spot.image}');">
+                            <span class="area-badge">${spot.area}</span>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="card-title-en">${spot.nameEn}</h2>
+                            <p class="card-title-jp">${spot.nameJp}</p>
+                            
+                            <p class="card-desc">${spot.description}</p>
+                            
+                            <div class="highlight-box">
+                                <strong>✨ Highlight:</strong><br>
+                                ${spot.highlight}
+                            </div>
+
+                            <div class="access-info">
+                                <strong>🚉 Access:</strong><br>
+                                ${spot.access}
+                            </div>
+                            
+                            <a href="${spot.mapLink}" target="_blank" class="map-btn">
+                                📍 View on Google Maps
+                            </a>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // フィルターボタンの制御
+        function filterSpots(area) {
+            renderSpots(area);
+            
+            // ボタンの色を変える処理
+            const buttons = document.querySelectorAll('.filter-nav button');
+            buttons.forEach(btn => {
+                // ボタンのIDを取得してアクティブクラスを制御
+                const btnId = `filter-${area.toLowerCase()}`;
+                if(btn.id === btnId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+                
+                // Allボタンの制御
+                if(area === 'all' && btn.id === 'filter-all') {
+                     btn.classList.add('active');
+                }
+            });
+        }
+
+        // 初期表示（ページ読み込み時に全て表示）
+        window.onload = function() {
+            filterSpots('all');
+        }
+    </script>
+</body>
+</html>
